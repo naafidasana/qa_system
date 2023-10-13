@@ -1,0 +1,11 @@
+version: '3'
+services:
+  qa-service:
+    build: .
+    ports:
+      - "5000:5000"
+
+  feedback-service:
+    build: .
+    ports:
+      - "6000:6000"
