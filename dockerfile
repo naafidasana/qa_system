@@ -5,9 +5,13 @@ FROM python:3.8
 WORKDIR /app
 
 # Copy requirements file into container and install dependencies
-COPY requirements.txt .
+COPY requirements1.txt .
+COPY requirements2.txt .
 RUN pip install --upgrade pip
-RUN pip install -q --no-cache-dir -r requirements.txt
+RUN python -m venv venv
+RUN . venv/bin/activate
+RUN pip install --no-cache-dir -r requirements1.txt
+RUN pip install --no-cache-dir -r requirements2.txt
 
 # Copy remaining application code into container
 COPY . .

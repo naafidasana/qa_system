@@ -4,8 +4,53 @@ services:
     build: .
     ports:
       - "5000:5000"
+    depends_on:
+      - db
+    networks:
+      qa-network:
+        aliases:
+          - qa-service
 
   feedback-service:
+    build:
+      context: .
+      dockerfile: dockerfile.feedback
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+    networks:
+      qa-network:
+        aliases:
+          - feedback-service
+    
+  db:
+    image: postgres:13
+    environment:
+      POSTGRES_USER: naafi
+      POSTGRES_PASSWORD: admin1234
+      POSTGRES_DB: qa_db
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+    networks:
+      qa-network:
+        aliases:
+          - db
+
+  web:
     build: .
     ports:
-      - "6000:6000"
+      - "80:80"
+    depends_on:
+      - qa-service
+    networks:
+      qa-network:
+        aliases:
+          - web
+
+networks:
+  qa-network:
+
+volumes:
+  postgres_data:

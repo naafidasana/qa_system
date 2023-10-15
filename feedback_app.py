@@ -1,9 +1,18 @@
 from flask import Flask, request, jsonify
+from flask_sqlalchemy import SQLAlchemy
 import json
 
 
 # Create app
 app = Flask(__name__)
+app.config["QA_DB_URI"] = "postgresql://naafi:admin1234@db/qa_db"
+db = SQLAlchemy(app)
+
+class Feedback(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    question = db.Column(db.String(255), nullable=False)
+    context = db.Column(db.String(255), nullable=False)
+    feedback_text = db.Column(db.String(255), nullable=False)
 
 feedback_data = []
 
@@ -23,4 +32,4 @@ def get_feedback():
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=6000)
+    app.run(host='0.0.0.0', port=8080)

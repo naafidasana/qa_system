@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Question Answering</title>
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+    </head>
+    <body>
+        <h1>As a Question</h1>
+        <form action="/question-answering" method="POST">
+            <label for="question">Question:</label>
+            <input type="text" name="question" id="question" required>
+            <input type="text" name="context" id="context" required>
+            <button type="submit">Submit</button>
+        </form>
+        <h2>Answer:</h2>
+        <p>{{ answer }}</p>
+        <script src="{{ url_for('static', filename='script.js') }}"></script>
+    </body>
+</html>
