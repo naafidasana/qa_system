@@ -22,14 +22,12 @@ class Question(db.Model):
     context = db.Column(db.String(255), nullable=False)
     answer = db.Column(db.String(255), nullable=False)
 
-@app.route("/test", methods=["POST"])
+@app.route("/", methods=["POST"])
 def test():
     question = request.json.get('question')
     # Placeholder for question answering pipeline
-    answer = "This is a placeholder answer."
-    return jsonify ({
-        'answer':answer
-    })
+    answer = ""
+    return render_template("qa_page.html", answer=answer)
 
 
 @app.route("/question-answering", methods=["GET", "POST"])
