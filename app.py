@@ -7,8 +7,8 @@ from flask_sqlalchemy import SQLAlchemy
 
 # Load pre-trained BERT model and tokenizer
 model_name = "distilbert-base-cased-distilled-squad"
-tokenizer = AutoTokenizer.from_pretrained(model_name, use_fast=False, skip_special_tokens=False)
-qa_pipeline = pipeline('question-answering', model=model_name, tokenizer=tokenizer)
+#tokenizer = AutoTokenizer.from_pretrained(model_name, use_fast=False, skip_special_tokens=False)
+#qa_pipeline = pipeline('question-answering', model=model_name, tokenizer=tokenizer)
 
 
 # Create app.
@@ -40,7 +40,8 @@ def question_answering():
         context = request.json.get('context')
 
         with torch.no_grad():
-            result = qa_pipeline(question=question, context=context)
+            #result = qa_pipeline(question=question, context=context)
+            result = {"answer": "this is a placeholder answer."}
             answer = result['answer']
 
     # Save question, context and answer in database
