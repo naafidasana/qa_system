@@ -1,7 +1,7 @@
 from transformers import AutoTokenizer, pipeline
 import torch
 
-from flask import Flask, request, jsonify, render_template
+from flask import Flask, request, render_template
 from flask_sqlalchemy import SQLAlchemy
 
 
@@ -24,7 +24,6 @@ class Question(db.Model):
 
 @app.route("/", methods=["POST", "GET"])
 def test():
-    question = request.json.get('question')
     # Placeholder for question answering pipeline
     answer = ""
     return render_template("qa_page.html", answer=answer)
