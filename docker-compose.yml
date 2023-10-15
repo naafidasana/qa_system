@@ -1,3 +1,4 @@
+# By: IBRAHIM Naafi Dasana and KANA TATANG Julien
 version: '3'
 services:
   qa-service:
