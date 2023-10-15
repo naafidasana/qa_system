@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Provide Feedback</title>
+</head>
+
+<body>
+    <h1>Provide Feedback</h1>
+    <form action="/feedback" method="POST">
+        <label for="question">Question:</label>
+        <input type="text" name="question" id="question" required>
+        <label for="context">Context:</label>
+        <input type="text" name="context" id="context" required>
+        <label for="feedback_text">Feedback Text:</label>
+        <input type="text" name="feedback_text" id="feedback_text" required>
+        <button type="submit">Submit Feedback</button>
+    </form>
+    <script src="{{ url_for('static', filename='feedback_script.js') }}"></script>
+</body>
+
+</html>

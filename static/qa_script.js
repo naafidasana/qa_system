@@ -17,7 +17,7 @@ document.addEventListener("DOMContentLoaded", function () {
         })
         .then(response => response.json())
         .then(data => {
-            annswerDisplay.textContent = data.answer;
+            answerDisplay.textContent = data.answer;
         })
         .catch(error => {
             console.error('Error', error);
