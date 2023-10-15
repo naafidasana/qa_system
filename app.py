@@ -22,7 +22,7 @@ class Question(db.Model):
     context = db.Column(db.String(255), nullable=False)
     answer = db.Column(db.String(255), nullable=False)
 
-@app.route("/", methods=["POST"])
+@app.route("/", methods=["POST", "GET"])
 def test():
     question = request.json.get('question')
     # Placeholder for question answering pipeline
