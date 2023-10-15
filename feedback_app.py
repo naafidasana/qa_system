@@ -1,7 +1,5 @@
 from flask import Flask, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
-import json
-
 
 # Create app
 app = Flask(__name__)
@@ -14,22 +12,35 @@ class Feedback(db.Model):
     context = db.Column(db.String(255), nullable=False)
     feedback_text = db.Column(db.String(255), nullable=False)
 
-feedback_data = []
-
 @app.route('/feedback', methods=["POST"])
 def collect_feedback():
-    feedback = request.json()
-    feedback_data.append(feedback)
-    with open('feedback.json', 'w') as f:
-        json.dump(feedback_data, f)
-    return jsonify({
-        'message': 'Feedback Received.'
-    })
+    if request.is_json:
+        data = request.get_json()
+        feedback = Feedback(
+            question=data.get('question'),
+            context=data.get('context'),
+            feedback_text=data.get('feedback_text')
+        )
+        db.session.add(feedback)
+        db.session.commit()
+        return jsonify({'message': 'Feedback Received and Saved to Database'}), 201
+    else:
+        return jsonify({'error': 'Invalid JSON data format'}), 400
 
 @app.route('/feedback', methods=["GET"])
 def get_feedback():
-    return jsonify(feedback_data)
-
+    feedback_entries = Feedback.query.all()
+    feedback_data = [
+        {
+            'id': entry.id,
+            'question': entry.question,
+            'context': entry.context,
+            'feedback_text': entry.feedback_text
+        }
+        for entry in feedback_entries
+    ]
+    return jsonify(feedback_data), 200
 
 if __name__ == '__main__':
+    db.create_all()
     app.run(host='0.0.0.0', port=8080)
