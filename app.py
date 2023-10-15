@@ -40,16 +40,18 @@ def question_answering():
         context = request.json.get('context')
 
         with torch.no_grad():
-            #result = qa_pipeline(question=question, context=context)
+            
             result = {"answer": "this is a placeholder answer."}
             answer = result['answer']
 
     # Save question, context and answer in database
-    usr_query = Question(question=question, context=context, answer=answer)
-    db.session.add(usr_query)
-    db.session.commit()
+    with app.app_context():
+        usr_query = Question(question=question, context=context, answer=answer)
+        db.session.add(usr_query)
+        db.session.commit()
     return render_template("qa_page.html", answer=answer)
 
 if __name__ == '__main__':
-    db.create_all()
+    with app.app_context():
+        db.create_all()
     app.run(host='0.0.0.0', port=5000)

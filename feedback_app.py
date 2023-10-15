@@ -21,8 +21,9 @@ def collect_feedback():
             context=data.get('context'),
             feedback_text=data.get('feedback_text')
         )
-        db.session.add(feedback)
-        db.session.commit()
+        with app.app_context():
+            db.session.add(feedback)
+            db.session.commit()
         return jsonify({'message': 'Feedback Received and Saved to Database'}), 201
     else:
         return jsonify({'error': 'Invalid JSON data format'}), 400
@@ -42,5 +43,6 @@ def get_feedback():
     return jsonify(feedback_data), 200
 
 if __name__ == '__main__':
-    db.create_all()
+    with app.app_context():
+        db.create_all()
     app.run(host='0.0.0.0', port=8080)
