@@ -37,7 +37,7 @@ def question_answering():
         context = request.json.get('context')
 
         with torch.no_grad():
-            result = pipeline(question=question, context=context)
+            result = qa_pipeline(question=question, context=context)
             answer = result['answer']
 
     # Save question, context and answer in database
