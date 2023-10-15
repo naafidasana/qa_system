@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, render_template, jsonify
 from flask_sqlalchemy import SQLAlchemy
 
 # Create app
@@ -11,6 +11,10 @@ class Feedback(db.Model):
     question = db.Column(db.String(255), nullable=False)
     context = db.Column(db.String(255), nullable=False)
     feedback_text = db.Column(db.String(255), nullable=False)
+
+@app.route('/feedback', methods=["GET"])
+def load_feedback_form():
+    return render_template('feedback_page.html')
 
 @app.route('/feedback', methods=["POST"])
 def collect_feedback():
@@ -28,7 +32,7 @@ def collect_feedback():
     else:
         return jsonify({'error': 'Invalid JSON data format'}), 400
 
-@app.route('/feedback', methods=["GET"])
+@app.route('/fetch_feedbacks', methods=["GET"])
 def get_feedback():
     feedback_entries = Feedback.query.all()
     feedback_data = [
