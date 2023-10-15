@@ -5,7 +5,7 @@ import json
 
 # Create app
 app = Flask(__name__)
-app.config["QA_DB_URI"] = "postgresql://naafi:admin1234@db/qa_db"
+app.config["SQLALCHEMY_DATABASE_URI"] = "postgresql://naafi:admin1234@db/qa_db"
 db = SQLAlchemy(app)
 
 class Feedback(db.Model):

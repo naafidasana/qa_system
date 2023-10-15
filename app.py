@@ -13,7 +13,7 @@ qa_pipeline = pipeline('question-answering', model=model_name, tokenizer=tokeniz
 
 # Create app.
 app = Flask(__name__)
-app.config["QA_DB_URI"] = "postgresql://naafi:admin1234@db/qa_db"
+app.config["SQLALCHEMY_DATABASE_URI"] = "postgresql://naafi:admin1234@db/qa_db"
 db = SQLAlchemy(app)
 
 class Question(db.Model):
