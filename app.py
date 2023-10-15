@@ -1,7 +1,7 @@
 from transformers import AutoTokenizer, pipeline
 import torch
 
-from flask import Flask, request, render_template
+from flask import Flask, request, jsonify, render_template
 from flask_sqlalchemy import SQLAlchemy
 
 
@@ -37,7 +37,7 @@ def question_answering():
         context = request.json.get('context')
 
         with torch.no_grad():
-            
+            # result = pipeline(question=question, context=context)
             result = {"answer": "this is a placeholder answer."}
             answer = result['answer']
 
@@ -46,7 +46,7 @@ def question_answering():
         usr_query = Question(question=question, context=context, answer=answer)
         db.session.add(usr_query)
         db.session.commit()
-    return render_template("qa_page.html", answer=answer)
+    return jsonify({'answer': answer})
 
 if __name__ == '__main__':
     with app.app_context():
